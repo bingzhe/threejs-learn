@@ -1,16 +1,21 @@
 lockfileVersion: 5.4
 
-specifiers:
-  dat.gui: ^0.7.9
-  gsap: ^3.11.4
-  parcel: ^2.8.3
-  three: ^0.149.0
+importers:
 
-dependencies:
-  dat.gui: 0.7.9
-  gsap: 3.11.4
-  parcel: 2.8.3
-  three: 0.149.0
+  .:
+    specifiers:
+      dat.gui: ^0.7.9
+      gsap: ^3.11.4
+      parcel: ^2.8.3
+      three: ^0.149.0
+    dependencies:
+      dat.gui: 0.7.9
+      gsap: 3.11.4
+      parcel: 2.8.3
+      three: 0.149.0
+
+  packages/01-threejs-basic:
+    specifiers: {}
 
 packages:
 
@@ -460,7 +465,7 @@ packages:
       '@parcel/source-map': 2.1.1
       '@parcel/utils': 2.8.3
       nullthrows: 1.1.1
-      terser: 5.16.4
+      terser: 5.16.5
     transitivePeerDependencies:
       - '@parcel/core'
     dev: false
@@ -920,7 +925,7 @@ packages:
     hasBin: true
     dependencies:
       caniuse-lite: 1.0.30001457
-      electron-to-chromium: 1.4.305
+      electron-to-chromium: 1.4.310
       node-releases: 2.0.10
       update-browserslist-db: 1.0.10_browserslist@4.21.5
     dev: false
@@ -1082,8 +1087,8 @@ packages:
     engines: {node: '>=6'}
     dev: false
 
-  /electron-to-chromium/1.4.305:
-    resolution: {integrity: sha512-WETy6tG0CT5gm1O+xCbyapWNsCcmIvrn4NHViIGYo2AT8FV2qUCXdaB+WqYxSv/vS5mFqhBYnfZAAkVArjBmUg==}
+  /electron-to-chromium/1.4.310:
+    resolution: {integrity: sha512-/xlATgfwkm5uDDwLw5nt/MNEf7c1oazLURMZLy39vOioGYyYzLWIDT8fZMJak6qTiAJ7udFTy7JG7ziyjNutiA==}
     dev: false
 
   /entities/2.2.0:
@@ -1603,8 +1608,8 @@ packages:
     engines: {node: '>=8'}
     dev: false
 
-  /terser/5.16.4:
-    resolution: {integrity: sha512-5yEGuZ3DZradbogeYQ1NaGz7rXVBDWujWlx1PT8efXO6Txn+eWbfKqB2bTDVmFXmePFkoLU6XI8UektMIEA0ug==}
+  /terser/5.16.5:
+    resolution: {integrity: sha512-qcwfg4+RZa3YvlFh0qjifnzBHjKGNbtDo9yivMqMFDy9Q6FSaQWSB/j1xKhsoUFJIqDOM3TsN6D5xbrMrFcHbg==}
     engines: {node: '>=10'}
     hasBin: true
     dependencies:
