@@ -8,7 +8,7 @@ import * as dat from "dat.gui";
 
 import { RGBELoader, RGBELoader } from "three/examples/jsm/loaders/RGBELoader";
 
-// 目标：设置环境纹理
+// 目标：初始points
 
 // 1、创建场景
 const scene = new THREE.Scene();
@@ -25,41 +25,34 @@ const camera = new THREE.PerspectiveCamera(
 camera.position.set(0, 0, 10);
 scene.add(camera);
 
-const rgbeLoader = new RGBELoader();
-rgbeLoader.loadAsync("textures/hdr/001.hdr").then((texture) => {
-  texture.mapping = THREE.EquirectangularReflectionMapping;
-  scene.background = texture;
-  scene.environment = texture;
-});
+// 创建球几何体
+const sphereGeometry = new THREE.SphereGeometry(3, 30, 30);
+// const material = new THREE.MeshBasicMaterial({
+//   color: 0xff000,
+//   wireframe: true,
+// });
+// const mesh = new THREE.Mesh(sphereGeometry, material);
+// scene.add(mesh);
 
-const sphereGeometry = new THREE.SphereGeometry(1, 20, 20);
-const material = new THREE.MeshStandardMaterial();
-const sphere = new THREE.Mesh(sphereGeometry, material);
-sphere.castShadow = true;
-scene.add(sphere);
+// 设计点材质的大小
+const pointsMaterial = new THREE.PointsMaterial();
+pointsMaterial.size = 0.1;
+pointsMaterial.color.set(0xff0000);
+// 是否衰减
+// pointsMaterial.sizeAttenuation = true;
 
-const planeGeometry = new THREE.PlaneGeometry(10, 10);
-const planeMaterial = new THREE.MeshStandardMaterial();
-const plane = new THREE.Mesh(planeGeometry, planeMaterial);
-plane.rotation.x = -Math.PI / 2;
-plane.position.y = -1;
-plane.receiveShadow = true;
+// 载入纹理
+const textureLoader = new THREE.TextureLoader();
+const texture = textureLoader.load("./textures/particles/1.png");
+// 设置点材质纹理
+pointsMaterial.map = texture;
+pointsMaterial.alphaMap = texture; // 透明纹理
+pointsMaterial.transparent = true;
+pointsMaterial.depthWrite = false;
+pointsMaterial.blending = THREE.AdditiveBlending;
 
-scene.add(plane);
-
-// 环境光
-const light = new THREE.AmbientLight(0xffffff, 0.5); // soft white light
-scene.add(light);
-//直线光源
-const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
-directionalLight.position.set(10, 10, 10);
-directionalLight.castShadow = true;
-
-//设计阴影贴图模糊度
-directionalLight.shadow.radius = 20;
-//设置阴影贴图分辨率
-directionalLight.shadow.mapSize.set(4096, 4096);
-scene.add(directionalLight);
+const points = new THREE.Points(sphereGeometry, pointsMaterial);
+scene.add(points);
 
 // 初始化渲染器
 const renderer = new THREE.WebGLRenderer();

@@ -6,9 +6,7 @@ import gsap from "gsap";
 // 导入dat.gui
 import * as dat from "dat.gui";
 
-import { RGBELoader, RGBELoader } from "three/examples/jsm/loaders/RGBELoader";
-
-// 目标：设置环境纹理
+// 目标：投射光线
 
 // 1、创建场景
 const scene = new THREE.Scene();
@@ -18,56 +16,60 @@ const camera = new THREE.PerspectiveCamera(
   75,
   window.innerWidth / window.innerHeight,
   0.1,
-  1000
+  300
 );
 
 // 设置相机位置
-camera.position.set(0, 0, 10);
+camera.position.set(0, 0, 20);
 scene.add(camera);
 
-const rgbeLoader = new RGBELoader();
-rgbeLoader.loadAsync("textures/hdr/001.hdr").then((texture) => {
-  texture.mapping = THREE.EquirectangularReflectionMapping;
-  scene.background = texture;
-  scene.environment = texture;
+const cubeGeometry = new THREE.BoxGeometry(1, 1, 1);
+const material = new THREE.MeshBasicMaterial({
+  wireframe: true,
+});
+const redMaterial = new THREE.MeshBasicMaterial({
+  color: "#ff0000",
 });
 
-const sphereGeometry = new THREE.SphereGeometry(1, 20, 20);
-const material = new THREE.MeshStandardMaterial();
-const sphere = new THREE.Mesh(sphereGeometry, material);
-sphere.castShadow = true;
-scene.add(sphere);
+let cubeArr = [];
+//1000个立方体
+for (let i = -5; i < 5; i++) {
+  for (let j = -5; j < 5; j++) {
+    for (let z = -5; z < 5; z++) {
+      const cube = new THREE.Mesh(cubeGeometry, material);
+      cube.position.set(i, j, z);
+      scene.add(cube);
+      cubeArr.push(cube);
+    }
+  }
+}
+// 创建投射光线对象
+const raycaster = new THREE.Raycaster();
 
-const planeGeometry = new THREE.PlaneGeometry(10, 10);
-const planeMaterial = new THREE.MeshStandardMaterial();
-const plane = new THREE.Mesh(planeGeometry, planeMaterial);
-plane.rotation.x = -Math.PI / 2;
-plane.position.y = -1;
-plane.receiveShadow = true;
+// 鼠标的位置对象
+const mouse = new THREE.Vector2();
 
-scene.add(plane);
+// 监听鼠标的位置
+window.addEventListener("mousemove", (event) => {
+  mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+  mouse.y = -((event.clientY / window.innerHeight) * 2 - 1);
 
-// 环境光
-const light = new THREE.AmbientLight(0xffffff, 0.5); // soft white light
-scene.add(light);
-//直线光源
-const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
-directionalLight.position.set(10, 10, 10);
-directionalLight.castShadow = true;
+  raycaster.setFromCamera(mouse, camera);
+  let result = raycaster.intersectObjects(cubeArr);
 
-//设计阴影贴图模糊度
-directionalLight.shadow.radius = 20;
-//设置阴影贴图分辨率
-directionalLight.shadow.mapSize.set(4096, 4096);
-scene.add(directionalLight);
+  result.forEach((item) => {
+    item.object.material = redMaterial;
+  });
+});
 
 // 初始化渲染器
 const renderer = new THREE.WebGLRenderer();
 // 设置渲染的尺寸大小
 renderer.setSize(window.innerWidth, window.innerHeight);
 // console.log(renderer);
-// 开启阴影中的阴影贴图
+// 开启场景中的阴影贴图
 renderer.shadowMap.enabled = true;
+renderer.physicallyCorrectLights = true;
 
 // 将webgl渲染的canvas内容添加到body
 document.body.appendChild(renderer.domElement);
@@ -87,6 +89,10 @@ scene.add(axesHelper);
 const clock = new THREE.Clock();
 
 function render() {
+  const time = clock.getElapsedTime();
+  // points.rotation.x = time * 0.1;
+  // points.rotation.y = time * 0.04;
+
   controls.update();
   renderer.render(scene, camera);
   //   渲染下一帧的时候就会调用render函数
