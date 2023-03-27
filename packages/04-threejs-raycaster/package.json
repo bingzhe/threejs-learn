@@ -1,5 +1,5 @@
 {
-  "name": "01-threejs-mesh",
+  "name": "01-threejs-raycaster",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",

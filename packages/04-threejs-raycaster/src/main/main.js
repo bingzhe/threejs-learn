@@ -60,6 +60,10 @@ window.addEventListener("mousemove", (event) => {
   result.forEach((item) => {
     item.object.material = redMaterial;
   });
+
+  // if (result[0]) {
+  //   result[0].object.material = redMaterial;
+  // }
 });
 
 // 初始化渲染器
