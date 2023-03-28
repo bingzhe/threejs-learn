@@ -213,7 +213,7 @@ gsap.to(smallBall.position, {
 });
 
 function render() {
-  const time = clock.getElapsedTime();
+  // const time = clock.getElapsedTime();
   let deltaTime = clock.getDelta();
 
   // points.rotation.x = time * 0.1;
@@ -225,7 +225,7 @@ function render() {
   camera.position.x += (mouse.x * 10 - camera.position.x) * deltaTime * 5;
 
   // cubeGroup.rotation.x = time * 0.5;
-  // cubeGroup.rotation.y = time * 0.5;
+  // cubeGroup.rotation.y = time * 0.5
 
   // sjxGroup.rotation.x = time * 0.4;
   // sjxGroup.rotation.y = time * 0.4;
@@ -277,7 +277,7 @@ window.addEventListener("scroll", () => {
     });
 
     gsap.fromTo(
-      `.page${currentPage} h1`,
+      `.page${currentPage + 1} h1`,
       { x: -300 },
       { x: 0, rotate: "+=360", duration: 1 }
     );
