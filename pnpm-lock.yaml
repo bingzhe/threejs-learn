@@ -4,11 +4,13 @@ importers:
 
   .:
     specifiers:
+      cannon-es: ^0.20.0
       dat.gui: ^0.7.9
       gsap: ^3.11.4
       parcel: ^2.8.3
       three: ^0.149.0
     dependencies:
+      cannon-es: 0.20.0
       dat.gui: 0.7.9
       gsap: 3.11.4
       parcel: 2.8.3
@@ -941,6 +943,10 @@ packages:
 
   /caniuse-lite/1.0.30001457:
     resolution: {integrity: sha512-SDIV6bgE1aVbK6XyxdURbUE89zY7+k1BBBaOwYwkNCglXlel/E7mELiHC64HQ+W0xSKlqWhV9Wh7iHxUjMs4fA==}
+    dev: false
+
+  /cannon-es/0.20.0:
+    resolution: {integrity: sha512-eZhWTZIkFOnMAJOgfXJa9+b3kVlvG+FX4mdkpePev/w/rP5V8NRquGyEozcjPfEoXUlb+p7d9SUcmDSn14prOA==}
     dev: false
 
   /chalk/2.4.2:
